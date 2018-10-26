@@ -35,3 +35,4 @@ let Tent = mongoose.model('Tent', tentSchema);
 
 module.exports.Tent = Tent;
 module.exports.Shirt = Shirt;
+module.exports.db = db;

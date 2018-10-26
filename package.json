@@ -10,6 +10,7 @@
   "scripts": {
     "react-dev": "webpack -d --watch",
     "startmon": "nodemon --inspect server/index.js",
+    "db:seed": "node db/seed.js",
     "test": "jest --verbose",
     "testW": "jest --watchAll --verbose",
     "testC": "jest --verbose --coverage"
