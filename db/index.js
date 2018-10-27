@@ -8,7 +8,7 @@ db.once('open', function() {
   console.log('Mongo DB is running');
 });
 
-let tentSchema = mongoose.Schema({
+let tentSchema = new mongoose.Schema({
   _id: Number,
   imageURL: String,
   title: String,
@@ -17,11 +17,11 @@ let tentSchema = mongoose.Schema({
   price: Number,
   sleepingCapacity: String,
   packagedWeight: String,
-  NumberOfDoors: Number,
-  BestUse: String
+  numberOfDoors: Number,
+  bestUse: String
 });
 
-let shirtSchema = mongoose.Schema({
+let shirtSchema = new mongoose.Schema({
   _id: Number,
   imageURL: String,
   title: String,
