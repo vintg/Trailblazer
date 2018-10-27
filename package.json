@@ -39,6 +39,6 @@
     "webpack-dev-server": "^3.1.10"
   },
   "jest": {
-    "setupTestFrameworkScriptFile": "<rootDir>src/setupTests.js"
+    "setupTestFrameworkScriptFile": "<rootDir>tests/setupTests.js"
   }
 }

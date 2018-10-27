@@ -1,4 +1,7 @@
-const { Tent, Shirt } = require('./index.js');
+const { Tent, Shirt, db } = require('./index.js');
+
+db.dropCollection('tents', ()=>{});
+db.dropCollection('shirts', ()=>{});
 
 let campTitleOptions1 = ['REI', 'REI Co-op', 'Marmot', 'Mountain', 'Kelty', 'Tepui', 'Alps', 'Himalayan', 'Andes', 'Karakoram', 'Pyrenees', 'Sierra', 'Tian Shan', 'Ural', 'Cascade', 'Pamir', 'Alaska', 'Atlas', 'Uinta', 'Teton', 'Sawatch', 'Blue Ridge', 'Absaroka', 'Transantarctic', 'Big Agnes'];
 
@@ -53,31 +56,18 @@ function getTentData(num) {
       price: getRandNum(100, 400),
       sleepingCapacity: sleepCap,
       packagedWeight: `${getRandNum(12, 25)} lbs. ${getRandNum(0, 16)} oz.`,
-      NumberOfDoors: getRandNum(1, 2),
-      BestUse: 'Camping'
+      numberOfDoors: getRandNum(1, 2),
+      bestUse: 'Camping'
     }
     data.push(obj);
   }
   return data;
 }
 
-tentData = getTentData(35);
-shirtData = getShirtData(35);
+tentData = getTentData(51);
+shirtData = getShirtData(51);
 
-
-
-
-Tent.create(tentData, ()=>{});
-Shirt.create(shirtData, ()=>{});
-
-
-// module.exports.tentData = tentData;
-// module.exports.shirtData = shirtData;
-
-
-
-
-
-
-
-
+Tent.create(tentData)
+  .then(() => Shirt.create(shirtData))
+  .then(() => db.close())
+  .catch((err) => console.log('DB SEED ERROR', err));
