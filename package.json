@@ -19,7 +19,8 @@
     "express": "^4.16.4",
     "mongoose": "^5.3.6",
     "react": "^16.6.0",
-    "react-dom": "^16.6.0"
+    "react-dom": "^16.6.0",
+    "react-star-ratings": "^2.3.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",

@@ -11,26 +11,32 @@ let shirtTitleOptions1 = ['Intrepid', 'Sahara', 'Stealth', 'Bermuda', 'Backwoods
 
 let shirtTitleOptions2 = ['Heathered', 'Mountain', 'Sweat-Resistant', 'Weatherproof', 'Sierra Collection', 'Lightweight', 'Tamiami', 'Henley', 'High Movement', 'Element', 'Breathable', 'Dry', 'Arcteryx', 'Middle-Earth', 'Asgard', 'Atlantis', 'Gotham', 'Ole', 'Trademark', 'Mithril'];
 
-function getRandNum(min, max) {
+function getRandInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function getRandNum(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Number((Math.random() * (max - min)).toFixed(2));
 }
 
 function getShirtData(num) {
   let data = [];
   for(let i = 1; i <= num; i++) {
 
-    let titlePart1 = shirtTitleOptions1[getRandNum(0, shirtTitleOptions1.length - 1)];
-    let titlePart2 = shirtTitleOptions2[getRandNum(0, shirtTitleOptions2.length - 1)];
+    let titlePart1 = shirtTitleOptions1[getRandInt(0, shirtTitleOptions1.length - 1)];
+    let titlePart2 = shirtTitleOptions2[getRandInt(0, shirtTitleOptions2.length - 1)];
 
     let obj = {
       _id: i,
-      imageURL: `https://s3-us-west-2.amazonaws.com/fec-project/shirt/S${i}.jpg`,
+      imageURL: `https://s3-us-west-2.amazonaws.com/fec-project/shirts/S${i}.jpg`,
       title: `${titlePart1} ${titlePart2} Shirt`,
       ranking: getRandNum(0, 5),
-      reviews: getRandNum(0, 100),
-      price: getRandNum(10, 85)
+      reviews: getRandInt(0, 100),
+      price: getRandInt(10, 85)
     }
     data.push(obj);
   }
@@ -41,22 +47,22 @@ function getTentData(num) {
   let data = [];
   for(let i = 1; i <= num; i++) {
 
-    let sleepNum = getRandNum(1, 10);
+    let sleepNum = getRandInt(1, 10);
     let sleepCap = sleepNum > 7 ? `8+ people` : `${sleepNum}-person`
 
-    let titlePart1 = campTitleOptions1[getRandNum(0, campTitleOptions1.length - 1)];
-    let titlePart2 = campTitleOptions2[getRandNum(0, campTitleOptions2.length - 1)];
+    let titlePart1 = campTitleOptions1[getRandInt(0, campTitleOptions1.length - 1)];
+    let titlePart2 = campTitleOptions2[getRandInt(0, campTitleOptions2.length - 1)];
 
     let obj = {
       _id: i,
       imageURL: `https://s3-us-west-2.amazonaws.com/fec-project/tents/${i}.jpg`,
       title: `${titlePart1} ${titlePart2} Tent`,
       ranking: getRandNum(0, 5),
-      reviews: getRandNum(0, 100),
-      price: getRandNum(100, 400),
+      reviews: getRandInt(0, 100),
+      price: getRandInt(100, 400),
       sleepingCapacity: sleepCap,
-      packagedWeight: `${getRandNum(12, 25)} lbs. ${getRandNum(0, 16)} oz.`,
-      numberOfDoors: getRandNum(1, 2),
+      packagedWeight: `${getRandInt(12, 25)} lbs. ${getRandInt(0, 16)} oz.`,
+      numberOfDoors: getRandInt(1, 2),
       bestUse: 'Camping'
     }
     data.push(obj);

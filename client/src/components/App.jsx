@@ -1,10 +1,25 @@
 import React from 'react';
+import PeopleAlsoViewed from './peopleAlsoViewed.jsx'
+import CompareAtGlance from './compareAtGlance.jsx'
+
 
 export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      tents: [],
+      tents: [{
+        "_id": 11,
+        "imageURL": "https://s3-us-west-2.amazonaws.com/fec-project/tents/11.jpg",
+        "title": "Blue Ridge Hut Tent",
+        "ranking": 1,
+        "reviews": 6,
+        "price": 165,
+        "sleepingCapacity": "8+ people",
+        "packagedWeight": "24 lbs. 9 oz.",
+        "numberOfDoors": 2,
+        "bestUse": "Camping",
+        "__v": 0
+    }],
       shirts: []
     };
 
@@ -39,11 +54,41 @@ export default class App extends React.Component {
   render () {
     return (
       <div>
-        <h1>Hello World</h1>
-        <img src='https://s3-us-west-2.amazonaws.com/fec-project/shirts/S1.jpg'></img>
-        <img src='https://source.unsplash.com/200x200/?tent'></img>
-        <img src='https://s3-us-west-2.amazonaws.com/fec-project/tents/1.jpg'></img>
-        <img src='https://s3-us-west-2.amazonaws.com/fec-project/tents/10.jpg'></img>
+        <div className='container'>
+          <div className='titleContainer'>
+            <h3>People also viewed</h3>
+          </div>
+          <div className='pplViewedContainer'>
+            {this.state.shirts.slice(0, 4).map((shirt) => (
+              <PeopleAlsoViewed key={shirt._id} item={shirt} />
+            ))}
+          </div>
+        </div>
+        <div className='container'>
+          <div className='titleContainer'>
+            <h3>People also viewed</h3>
+          </div>
+          <div className='pplViewedContainer'>
+            {this.state.tents.slice(0, 4).map((item) => (
+              <PeopleAlsoViewed key={item._id} item={item} />
+            ))}
+          </div>
+        </div>
+        <div className='container'>
+          <div className='titleContainer'>
+            <h3>Compare at a glance</h3>
+          </div>
+          <div className='compare-at-glance__container'>
+            <div className='compare-at-glance__current'>
+              <CompareAtGlance linkText={'Buy Now'} item={this.state.tents[0]} />
+            </div>
+            <div className='compare-at-glance__suggestions'>
+              {this.state.tents.slice(1).map((item) => (
+                <CompareAtGlance linkText={'View Now'} key={item._id} item={item} />
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
