@@ -9,6 +9,12 @@ img {
   width: 150px;
 }
 
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+}
+
 .text-center {
   text-align: center;
 }

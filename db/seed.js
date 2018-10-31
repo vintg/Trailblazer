@@ -11,6 +11,8 @@ let shirtTitleOptions1 = ['Intrepid', 'Sahara', 'Stealth', 'Bermuda', 'Backwoods
 
 let shirtTitleOptions2 = ['Heathered', 'Mountain', 'Sweat-Resistant', 'Weatherproof', 'Sierra Collection', 'Lightweight', 'Tamiami', 'Henley', 'High Movement', 'Element', 'Breathable', 'Dry', 'Arcteryx', 'Middle-Earth', 'Asgard', 'Atlantis', 'Gotham', 'Ole', 'Trademark', 'Mithril'];
 
+let idCount = 1;
+
 function getRandInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -25,18 +27,20 @@ function getRandNum(min, max) {
 
 function getShirtData(num) {
   let data = [];
-  for(let i = 1; i <= num; i++) {
+  let limit = num + idCount;
+  for(idCount; idCount < limit; idCount++) {
 
     let titlePart1 = shirtTitleOptions1[getRandInt(0, shirtTitleOptions1.length - 1)];
     let titlePart2 = shirtTitleOptions2[getRandInt(0, shirtTitleOptions2.length - 1)];
 
     let obj = {
-      _id: i,
-      imageURL: `https://s3-us-west-2.amazonaws.com/fec-project/shirts/S${i}.jpg`,
+      _id: idCount,
+      imageURL: `https://s3-us-west-2.amazonaws.com/fec-project/shirts/S${idCount}.jpg`,
       title: `${titlePart1} ${titlePart2} Shirt`,
       ranking: getRandNum(0, 5),
       reviews: getRandInt(0, 100),
-      price: getRandInt(10, 85)
+      price: getRandInt(10, 85),
+      productType: 'Shirt'
     }
     data.push(obj);
   }
@@ -45,7 +49,8 @@ function getShirtData(num) {
 
 function getTentData(num) {
   let data = [];
-  for(let i = 1; i <= num; i++) {
+  let limit = num + idCount;
+  for(idCount; idCount < limit; idCount++) {
 
     let sleepNum = getRandInt(1, 10);
     let sleepCap = sleepNum > 7 ? `8+ people` : `${sleepNum}-person`
@@ -54,8 +59,8 @@ function getTentData(num) {
     let titlePart2 = campTitleOptions2[getRandInt(0, campTitleOptions2.length - 1)];
 
     let obj = {
-      _id: i,
-      imageURL: `https://s3-us-west-2.amazonaws.com/fec-project/tents/${i}.jpg`,
+      _id: idCount,
+      imageURL: `https://s3-us-west-2.amazonaws.com/fec-project/tents/${idCount}.jpg`,
       title: `${titlePart1} ${titlePart2} Tent`,
       ranking: getRandNum(0, 5),
       reviews: getRandInt(0, 100),
@@ -63,7 +68,8 @@ function getTentData(num) {
       sleepingCapacity: sleepCap,
       packagedWeight: `${getRandInt(12, 25)} lbs. ${getRandInt(0, 16)} oz.`,
       numberOfDoors: getRandInt(1, 2),
-      bestUse: 'Camping'
+      bestUse: 'Camping',
+      productType: 'Tent'
     }
     data.push(obj);
   }

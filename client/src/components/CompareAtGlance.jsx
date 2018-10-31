@@ -2,6 +2,9 @@ import React from 'react';
 import StarRating from 'react-star-ratings';
 
 const CompareAtGlance = ({ item, linkText }) => (
+  !item
+  ? <div>please wait</div>
+  :
   <div className='cag__item'>
     <img src={item.imageURL}></img>
     <div className='cag__item__main-info text-center'>

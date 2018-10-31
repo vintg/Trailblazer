@@ -2,6 +2,9 @@ import React from 'react';
 import StarRating from 'react-star-ratings';
 
 const PeopleAlsoViewed = ({ item }) => (
+  !item
+  ? <div>please wait</div>
+  :
   <div className='peopleAlsoViewedItem'>
     <img src={item.imageURL}></img>
     <div>
