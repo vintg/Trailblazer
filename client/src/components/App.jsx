@@ -9,8 +9,8 @@ export default class App extends React.Component {
     super();
     this.state = {
       currentItem: false,
-      tents: [],
-      shirts: []
+      tents: false,
+      shirts: false
     };
 
     this.updateState = this.updateState.bind(this);
@@ -69,6 +69,9 @@ export default class App extends React.Component {
     }
 
     return (
+      !this.state.tents || !this.state.shirts
+      ? <div className='centered'>Loading...:D</div>
+      :
       <div>
         {display}
       </div>

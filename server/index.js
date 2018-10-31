@@ -7,23 +7,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/../client/dist'));
 
-
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// });
-
-
+//Routes-Endpoints
 app.get('/product/:id', (req, res) => {
-  let id = req.params.id;
   let file = path.join(`${__dirname}/../client/dist/index.html`);
-  res.sendFile(file);
+  res.sendFile(file); //When using sendFile if you have '..' in the file name the browser thinks its malicious. Need to use path.join or path.resolve to bypass'
 })
-
-
-
-
 
 app.get('/product/data/:id', (req, res) => {
   let id = req.params.id;
