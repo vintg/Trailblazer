@@ -1,8 +1,9 @@
 import React from 'react';
-import PeopleAlsoViewed from './peopleAlsoViewed.jsx'
-import CompareAtGlance from './compareAtGlance.jsx'
-import Tents from './Tents.jsx'
-import Shirts from './Shirts.jsx'
+import PeopleAlsoViewed from './peopleAlsoViewed.jsx';
+import CompareAtGlance from './compareAtGlance.jsx';
+import Tents from './Tents.jsx';
+import Shirts from './Shirts.jsx';
+import 'unfetch/polyfill'; //This is required for jest tests. Node does not understand the fetch method until you download npm unfetch.
 
 export default class App extends React.Component {
   constructor() {
