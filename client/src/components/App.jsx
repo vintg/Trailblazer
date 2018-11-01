@@ -1,25 +1,15 @@
 import React from 'react';
 import PeopleAlsoViewed from './peopleAlsoViewed.jsx'
 import CompareAtGlance from './compareAtGlance.jsx'
-
+import Tents from './Tents.jsx'
+import Shirts from './Shirts.jsx'
 
 export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      tents: [{
-        "_id": 11,
-        "imageURL": "https://s3-us-west-2.amazonaws.com/fec-project/tents/11.jpg",
-        "title": "Blue Ridge Hut Tent",
-        "ranking": 1,
-        "reviews": 6,
-        "price": 165,
-        "sleepingCapacity": "8+ people",
-        "packagedWeight": "24 lbs. 9 oz.",
-        "numberOfDoors": 2,
-        "bestUse": "Camping",
-        "__v": 0
-    }],
+      currentItem: false,
+      tents: [],
       shirts: []
     };
 
@@ -27,8 +17,21 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
+    const url = window.location.href.split('/');
+    const id = +url[url.length - 1];
+    if(!isNaN(id) && id !== 0 && id < 103) {
+      this.getCurrentItem(this.updateState, id);
+    }
+
     this.getTentData(this.updateState);
     this.getShirtData(this.updateState);
+  }
+
+  getCurrentItem(cb, id) {
+    fetch(`http://localhost:3004/product/data/${id}`)
+    .then(res => res.json())
+    .then(data => cb('currentItem', data))
+    .catch(error => console.error(error))
   }
 
   getTentData(cb) {
@@ -51,44 +54,23 @@ export default class App extends React.Component {
     })
   }
 
+
   render () {
+    let current = this.state.currentItem;
+    let display;
+    if (current) {
+      if (current[0].productType === 'Tent') {
+        display = <Tents tents={this.state.tents} current={this.state.currentItem} />;
+      } else {
+        display = <Shirts shirts={this.state.shirts} />;
+      }
+    } else {
+      display = <Shirts shirts={this.state.shirts} />;
+    }
+
     return (
       <div>
-        <div className='container'>
-          <div className='titleContainer'>
-            <h3>People also viewed</h3>
-          </div>
-          <div className='pplViewedContainer'>
-            {this.state.shirts.slice(0, 4).map((shirt) => (
-              <PeopleAlsoViewed key={shirt._id} item={shirt} />
-            ))}
-          </div>
-        </div>
-        <div className='container'>
-          <div className='titleContainer'>
-            <h3>People also viewed</h3>
-          </div>
-          <div className='pplViewedContainer'>
-            {this.state.tents.slice(0, 4).map((item) => (
-              <PeopleAlsoViewed key={item._id} item={item} />
-            ))}
-          </div>
-        </div>
-        <div className='container'>
-          <div className='titleContainer'>
-            <h3>Compare at a glance</h3>
-          </div>
-          <div className='compare-at-glance__container'>
-            <div className='compare-at-glance__current'>
-              <CompareAtGlance linkText={'Buy Now'} item={this.state.tents[0]} />
-            </div>
-            <div className='compare-at-glance__suggestions'>
-              {this.state.tents.slice(1).map((item) => (
-                <CompareAtGlance linkText={'View Now'} key={item._id} item={item} />
-              ))}
-            </div>
-          </div>
-        </div>
+        {display}
       </div>
     )
   }

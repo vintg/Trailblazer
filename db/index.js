@@ -18,7 +18,8 @@ let tentSchema = new mongoose.Schema({
   sleepingCapacity: String,
   packagedWeight: String,
   numberOfDoors: Number,
-  bestUse: String
+  bestUse: String,
+  productType: String,
 });
 
 let shirtSchema = new mongoose.Schema({
@@ -28,6 +29,7 @@ let shirtSchema = new mongoose.Schema({
   ranking: Number,
   reviews: Number,
   price: Number,
+  productType: String,
 });
 
 let Shirt = mongoose.model('Shirt', shirtSchema);
