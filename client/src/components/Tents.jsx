@@ -6,7 +6,7 @@ const Tents = ({ tents, current }) => (
   <div>
     <div className='container'>
       <div className='titleContainer'>
-        <h3 >People also viewed</h3>
+        <h3>People also viewed</h3>
       </div>
       <div className='pplViewedContainer' >
         {tents.slice(0, 4).map((item) => (
