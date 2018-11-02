@@ -67,6 +67,8 @@ describe('PeopleAlsoViewed Component', () => {
     };
     const w = mount(<PeopleAlsoViewed item={testData} />)
     expect(w.find('.roboto').text()).toEqual('$45');
+    console.log('HEEEEELLLLOOO', w.find('[data-price="dt-price"]').text())
+    console.log('HEEEEELLLLOOO', w.find('[data-price="dt-price"]').first().debug())
     expect((w.find('StarRatings').props().rating)).toEqual(2.76);
   })
 })
