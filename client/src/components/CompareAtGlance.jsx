@@ -19,7 +19,7 @@ const CompareAtGlance = ({ item, linkText }) => (
         />
         <span className='review'>({item.reviews})</span>
       </div>
-      <p className='roboto'>${item.price}</p>
+      <p className='roboto' data-price="dt-price">${item.price}</p>
 
       {/*<a className="cag__link" href="">{props for links text}</a>*/}
       <a className="cag__link" href="">{linkText}</a>

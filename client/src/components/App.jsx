@@ -1,16 +1,17 @@
 import React from 'react';
-import PeopleAlsoViewed from './peopleAlsoViewed.jsx'
-import CompareAtGlance from './compareAtGlance.jsx'
-import Tents from './Tents.jsx'
-import Shirts from './Shirts.jsx'
+import PeopleAlsoViewed from './peopleAlsoViewed.jsx';
+import CompareAtGlance from './compareAtGlance.jsx';
+import Tents from './Tents.jsx';
+import Shirts from './Shirts.jsx';
+import 'unfetch/polyfill'; //This is required for jest tests. Node does not understand the fetch method until you download npm unfetch.
 
 export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
       currentItem: false,
-      tents: [],
-      shirts: []
+      tents: false,
+      shirts: false
     };
 
     this.updateState = this.updateState.bind(this);
@@ -69,6 +70,9 @@ export default class App extends React.Component {
     }
 
     return (
+      !this.state.tents || !this.state.shirts
+      ? <div className='centered'>Loading...:D</div>
+      :
       <div>
         {display}
       </div>

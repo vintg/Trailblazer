@@ -8,7 +8,7 @@ const Tents = ({ tents, current }) => (
       <div className='titleContainer'>
         <h3>People also viewed</h3>
       </div>
-      <div className='pplViewedContainer'>
+      <div className='pplViewedContainer' data-test='dt-comp-people'>
         {tents.slice(0, 4).map((item) => (
           <PeopleAlsoViewed key={item._id} item={item} />
         ))}
