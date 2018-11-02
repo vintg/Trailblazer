@@ -12,7 +12,7 @@
     "startmon": "nodemon --inspect server/index.js",
     "db:seed": "node db/seed.js",
     "test": "jest --verbose",
-    "testW": "jest --watchAll --verbose",
+    "testW": "jest --watchAll",
     "testC": "jest --verbose --coverage"
   },
   "dependencies": {

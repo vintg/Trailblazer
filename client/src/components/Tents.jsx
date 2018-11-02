@@ -8,13 +8,13 @@ const Tents = ({ tents, current }) => (
       <div className='titleContainer'>
         <h3>People also viewed</h3>
       </div>
-      <div className='pplViewedContainer' >
+      <div className='pplViewedContainer' data-test='dt-comp-people'>
         {tents.slice(0, 4).map((item) => (
           <PeopleAlsoViewed key={item._id} item={item} />
         ))}
       </div>
     </div>
-    <div className='container' data-test='dt-comp-people'>
+    <div className='container'>
       <div className='titleContainer'>
         <h3>Compare at a glance</h3>
       </div>
