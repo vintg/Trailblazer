@@ -1,6 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import PeopleAlsoViewed from './PeopleAlsoViewed';
+import React from "react";
+import PeopleAlsoViewed from "./PeopleAlsoViewed";
 
 const Shirts = ({ shirts }) => (
   <div className="container">
@@ -14,9 +13,5 @@ const Shirts = ({ shirts }) => (
     </div>
   </div>
 );
-
-Shirts.propTypes = {
-  shirts: PropTypes.instanceOf(Array).isRequired,
-};
 
 export default Shirts;

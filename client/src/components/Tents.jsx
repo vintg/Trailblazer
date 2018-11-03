@@ -1,7 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import PeopleAlsoViewed from './PeopleAlsoViewed';
-import CompareAtGlance from './CompareAtGlance';
+import React from "react";
+import PeopleAlsoViewed from "./PeopleAlsoViewed";
+import CompareAtGlance from "./CompareAtGlance";
 
 const Tents = ({ tents, current }) => (
   <div>
@@ -32,10 +31,5 @@ const Tents = ({ tents, current }) => (
     </div>
   </div>
 );
-
-Tents.propTypes = {
-  tents: PropTypes.instanceOf(Array).isRequired,
-  current: PropTypes.instanceOf(Array).isRequired,
-};
 
 export default Tents;
