@@ -17,5 +17,8 @@ module.exports = {
    output: {
     filename: 'bundle.js',
     path: __dirname + '/client/dist'
+  },
+  resolve: {
+    extensions: [".jsx", ".js"] //resolves all .jsx and .js files so that you don't need these extensions when you import in other files.
   }
 };
