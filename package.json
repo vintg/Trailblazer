@@ -10,10 +10,6 @@
   "scripts": {
     "react-dev": "webpack -d --watch",
     "react-prod": "webpack -p",
-
-    "webpack:dev": "webpack --config webpack.dev.js --watch",
-    "webpack:prod": "webpack --config webpack.prod.js",
-
     "startmon": "nodemon --inspect server/index.js",
     "db:seed": "node db/seed.js",
     "lint:fix": "eslint --ext .jsx 'client' --fix",
@@ -57,7 +53,7 @@
     "regenerator-runtime": "^0.12.1",
     "webpack": "^4.22.0",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.10",
+    "webpack-dev-server": "^3.1.10"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "<rootDir>tests/setupTests.js"
