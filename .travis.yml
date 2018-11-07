@@ -9,3 +9,4 @@ cache:
     - "node_modules"
 before_script:
   - npm run db:seed
+  - jest --detectOpenHandles
