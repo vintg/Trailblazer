@@ -14,7 +14,7 @@
     "db:seed": "node db/seed.js",
     "lint:fix": "eslint --ext .jsx 'client' --fix",
     "lint": "eslint --ext .jsx 'client'",
-    "test": "jest --verbose -i",
+    "test": "jest --verbose",
     "testW": "jest --watchAll",
     "testC": "jest --verbose --coverage"
   },
