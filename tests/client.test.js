@@ -81,7 +81,7 @@ describe("App Component", () => {
       expect(w.state().shirts.length).toEqual(4);
       expect(w.state().tents.length).toEqual(5);
       done();
-    }, 4000);
+    }, 100);
   });
 
   test("PeopleAlsoViewed component renders", done => {
@@ -91,6 +91,6 @@ describe("App Component", () => {
       expect(w.find("h3").text()).toEqual("People also viewed");
       expect(w.find("PeopleAlsoViewed").length).toEqual(4);
       done();
-    }, 4000);
+    }, 100);
   });
 });
