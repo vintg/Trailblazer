@@ -72,6 +72,7 @@ describe("PeopleAlsoViewed Component", () => {
 });
 
 
+
 //These tests fail when using Travis CI. They are integration tests. I don't like how i'm using setTimeout and will need to refactor later.
 // describe("App Component", () => {
 //   test("proper state values", done => {
