@@ -13,10 +13,10 @@
     "startmon": "nodemon --inspect server/index.js",
     "db:seed": "node db/seed.js",
     "lint:fix": "eslint --ext .jsx 'client' --fix",
-    "lint": "eslint --ext .jsx 'client'",
-    "test": "jest --verbose",
-    "testW": "jest --watchAll",
-    "testC": "jest --verbose --coverage"
+    "lint": "eslint --ext .jsx 'client'"
+    // "test": "jest --verbose",
+    // "testW": "jest --watchAll",
+    // "testC": "jest --verbose --coverage"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
