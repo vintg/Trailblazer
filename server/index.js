@@ -52,7 +52,7 @@ app.get("/data/tents", (req, res) => {
   });
 });
 
-const port = 8081;
+const port = 3000;
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);

@@ -60,7 +60,7 @@ export default class App extends React.Component {
     let display;
     if (currentItem) {
       if (currentItem[0].productType === "Tent") {
-        display = <Tents tents={tents} current={currentItem} />;
+        display = <Tents tents={tents} current={currentItem} updateState={this.updateState} />;
       } else {
         display = <Shirts shirts={shirts} />;
       }

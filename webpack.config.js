@@ -21,4 +21,15 @@ module.exports = {
   resolve: {
     extensions: [".jsx", ".js"] //resolves all .jsx and .js files so that you don't need these extensions when you import in other files.
   }
+ //  optimization: {
+ //   splitChunks: {
+ //     cacheGroups: {
+ //       commons: {
+ //         test: /[\\/]node_modules[\\/]/,
+ //         name: 'vendors',
+ //         chunks: 'all',
+ //       },
+ //     },
+ //   },
+ // },
 };
