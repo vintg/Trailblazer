@@ -9,6 +9,8 @@
   },
   "scripts": {
     "react-dev": "webpack -d --watch",
+    "react-prod": "webpack -p",
+    "start": "node server/index.js",
     "startmon": "nodemon --inspect server/index.js",
     "db:seed": "node db/seed.js",
     "lint:fix": "eslint --ext .jsx 'client' --fix",

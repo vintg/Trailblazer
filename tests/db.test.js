@@ -1,4 +1,8 @@
-import { Tent, Shirt } from "../db/index";
+import { Tent, Shirt, db } from "../db/index";
+
+afterAll(() => {
+  return db.close();
+});
 
 describe("DB Test", () => {
   test("Confirm we have a 51st document in Tent Collection", done => {
