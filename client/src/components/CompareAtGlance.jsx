@@ -7,7 +7,7 @@ const CompareAtGlance = ({ item, linkText }) =>
   ) : (
     <div className="cag__item">
       <a href={`http://localhost:3000/product/${item._id}`}>
-        <img src={item.imageURL} alt="Product" />
+        <img className="imgReducedSize" src={item.imageURL} alt="Product" />
       </a>
       <div className="cag__item__main-info text-center">
         <p className="roboto-C cag__item__main-info__name">{item.title}</p>
@@ -24,7 +24,10 @@ const CompareAtGlance = ({ item, linkText }) =>
         <p className="roboto" data-price="dt-price">
           ${item.price}
         </p>
-        <a className="cag__link" href={`http://localhost:3000/product/${item._id}`}>
+        <a
+          className="cag__link"
+          href={`http://trailblazer-pc.us-east-2.elasticbeanstalk.com/product/${item._id}`}
+        >
           {linkText}
         </a>
       </div>

@@ -1,5 +1,8 @@
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = {
-  entry: __dirname + '/client/src/index.jsx',
+  entry: {code: __dirname + '/client/src/index.jsx'},
   module: {
     rules: [
       {
@@ -15,21 +18,29 @@ module.exports = {
     ]
   },
    output: {
-    filename: 'bundle.js',
-    path: __dirname + '/client/dist'
+    filename: '[name]bundle.js',
+    path: __dirname + '/client/dist',
+    publicPath: '/'
   },
   resolve: {
     extensions: [".jsx", ".js"] //resolves all .jsx and .js files so that you don't need these extensions when you import in other files.
-  }
- //  optimization: {
- //   splitChunks: {
- //     cacheGroups: {
- //       commons: {
- //         test: /[\\/]node_modules[\\/]/,
- //         name: 'vendors',
- //         chunks: 'all',
- //       },
- //     },
- //   },
- // },
+  },
+   plugins: [
+    new BundleAnalyzerPlugin({ analyzerMode: 'static' }),
+    new HtmlWebpackPlugin({
+      title: 'Caching',
+      template: 'indexTemplate.html',
+    }),
+  ],
+  optimization: {
+   splitChunks: {
+     cacheGroups: {
+       commons: {
+         test: /[\\/]node_modules[\\/]/,
+         name: 'nodeModules',
+         chunks: 'all',
+       },
+     },
+   },
+ },
 };

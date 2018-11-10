@@ -6,7 +6,7 @@ body {
   margin: 0;
 }
 
-img {
+.imgReducedSize {
   height: 150px;
   width: 150px;
 }
@@ -235,10 +235,6 @@ img {
 .nav__navShop__middle {
   border-bottom: 1px solid white;
   margin: 10px 0;
-}
-
-.nav__navShop__bottom {
-
 }
 
 .nav__navShop-links ul {

@@ -6,7 +6,7 @@ const { Tent, Shirt } = require("../db/index.js");
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(`${__dirname}/../client/dist`));
+app.use(express.static(`${__dirname}/../client/dist`, { maxAge: '365d' }));
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(

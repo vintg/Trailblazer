@@ -6,7 +6,7 @@ const PeopleAlsoViewed = ({ item }) =>
     <div>please wait</div>
   ) : (
     <div className="peopleAlsoViewedItem">
-      <img src={item.imageURL} alt="Product" />
+      <img className="imgReducedSize" src={item.imageURL} alt="Product" />
       <div>
         <StarRating
           numberOfStars={5}

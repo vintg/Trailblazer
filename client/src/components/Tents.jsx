@@ -24,7 +24,12 @@ const Tents = ({ tents, current, updateState }) => (
         </div>
         <div className="compare-at-glance__suggestions">
           {tents.map(item => (
-            <CompareAtGlance linkText="View Now" key={item._id} item={item} updateState={updateState}/>
+            <CompareAtGlance
+              linkText="View Now"
+              key={item._id}
+              item={item}
+              updateState={updateState}
+            />
           ))}
         </div>
       </div>
