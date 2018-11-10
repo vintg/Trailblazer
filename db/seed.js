@@ -35,7 +35,7 @@ function getShirtData(num) {
 
     let obj = {
       _id: idCount,
-      imageURL: `https://s3-us-west-2.amazonaws.com/fec-project/shirts/S${idCount}.jpg`,
+      imageURL: `https://s3-us-west-2.amazonaws.com/fec-project/shirtsResized/S${idCount}.jpg`,
       title: `${titlePart1} ${titlePart2} Shirt`,
       ranking: getRandNum(0, 5),
       reviews: getRandInt(0, 100),
@@ -60,7 +60,7 @@ function getTentData(num) {
 
     let obj = {
       _id: idCount,
-      imageURL: `https://s3-us-west-2.amazonaws.com/fec-project/tents/${idCount}.jpg`,
+      imageURL: `https://s3-us-west-2.amazonaws.com/fec-project/tentsResized/${idCount}.jpg`,
       title: `${titlePart1} ${titlePart2} Tent`,
       ranking: getRandNum(0, 5),
       reviews: getRandInt(0, 100),

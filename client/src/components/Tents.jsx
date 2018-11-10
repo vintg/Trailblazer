@@ -2,7 +2,7 @@ import React from "react";
 import PeopleAlsoViewed from "./PeopleAlsoViewed";
 import CompareAtGlance from "./CompareAtGlance";
 
-const Tents = ({ tents, current }) => (
+const Tents = ({ tents, current, updateState }) => (
   <div>
     <div className="container">
       <div className="titleContainer">
@@ -24,7 +24,12 @@ const Tents = ({ tents, current }) => (
         </div>
         <div className="compare-at-glance__suggestions">
           {tents.map(item => (
-            <CompareAtGlance linkText="View Now" key={item._id} item={item} />
+            <CompareAtGlance
+              linkText="View Now"
+              key={item._id}
+              item={item}
+              updateState={updateState}
+            />
           ))}
         </div>
       </div>

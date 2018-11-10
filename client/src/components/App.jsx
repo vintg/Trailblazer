@@ -29,7 +29,9 @@ export default class App extends React.Component {
   }
 
   getCurrentItem(cb, id) {
-    fetch(`http://trailblazer-pc.us-east-2.elasticbeanstalk.com/product/data/${id}`)
+    fetch(
+      `http://trailblazer-pc.us-east-2.elasticbeanstalk.com/product/data/${id}`
+    )
       .then(res => res.json())
       .then(data => cb("currentItem", data))
       .catch(error => console.error(error));
@@ -60,7 +62,13 @@ export default class App extends React.Component {
     let display;
     if (currentItem) {
       if (currentItem[0].productType === "Tent") {
-        display = <Tents tents={tents} current={currentItem} />;
+        display = (
+          <Tents
+            tents={tents}
+            current={currentItem}
+            updateState={this.updateState}
+          />
+        );
       } else {
         display = <Shirts shirts={shirts} />;
       }

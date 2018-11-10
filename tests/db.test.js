@@ -34,7 +34,7 @@ describe("DB Test", () => {
       .then(data => {
         expect(data[0]._id).toBe(52);
         expect(data[0].imageURL).toBe(
-          "https://s3-us-west-2.amazonaws.com/fec-project/shirts/S52.jpg"
+          "https://s3-us-west-2.amazonaws.com/fec-project/shirtsResized/S52.jpg"
         );
         expect(typeof data[0].title).toBe("string");
         expect(data[0].ranking).toBeLessThanOrEqual(5);
@@ -51,7 +51,7 @@ describe("DB Test", () => {
       .then(data => {
         expect(data[0]._id).toBe(1);
         expect(data[0].imageURL).toBe(
-          "https://s3-us-west-2.amazonaws.com/fec-project/tents/1.jpg"
+          "https://s3-us-west-2.amazonaws.com/fec-project/tentsResized/1.jpg"
         );
         expect(data[0].ranking).toBeLessThanOrEqual(5);
         expect(data[0].reviews).toBeLessThanOrEqual(100);
