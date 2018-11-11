@@ -6,7 +6,7 @@ const { Tent, Shirt } = require("../db/index.js");
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(`${__dirname}/../client/dist`, { maxAge: '365d' }));
+app.use(express.static(`${__dirname}/../client/dist`, { maxAge: '365d' })); //setting cache heading to save this file on your computer for a year and if a file requests then do'nt get it just use the saved copy
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
@@ -52,7 +52,7 @@ app.get("/data/tents", (req, res) => {
   });
 });
 
-const port = 8081;
+const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);

@@ -18,7 +18,7 @@ module.exports = {
     ]
   },
    output: {
-    filename: '[name]bundle.js',
+    filename: '[name][contenthash]bundle.js',
     path: __dirname + '/client/dist',
     publicPath: '/'
   },
@@ -26,7 +26,7 @@ module.exports = {
     extensions: [".jsx", ".js"] //resolves all .jsx and .js files so that you don't need these extensions when you import in other files.
   },
    plugins: [
-    new BundleAnalyzerPlugin({ analyzerMode: 'static' }),
+    // new BundleAnalyzerPlugin({ analyzerMode: 'static' }),
     new HtmlWebpackPlugin({
       title: 'Caching',
       template: 'indexTemplate.html',
