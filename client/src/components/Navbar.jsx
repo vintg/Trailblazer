@@ -11,9 +11,19 @@ class Navbar extends React.Component {
   }
 
   handleSubmit(e) {
-    const { input } = this.state;
     e.preventDefault();
-    window.location.href = `http://trailblazer-pc.us-east-2.elasticbeanstalk.com/product/${input}`;
+
+    const { input } = this.state;
+    const protocol = window.location.protocol;
+    const hostname = window.location.hostname;
+    const pathname = window.location.pathname;
+    let port = window.location.port;
+
+    if (port !== "") {
+      window.location.href = `${protocol}//${hostname}:${port}/product/${input}`
+    } else {
+      window.location.href = `${protocol}//${hostname}/product/${input}`
+    }
   }
 
   handleInputChange(event, prop) {
