@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise; // this code solves a deprication warning for Mongoose mPromise
 // mongoose.connect('mongodb://localhost/products', { useNewUrlParser: true });
-const URI = 'mongodb+srv://drew:rNeRmNbP1X6bqoll@trailblazerdb-gztzi.mongodb.net/products'
+const URI = 'mongodb+srv://"YOUR USERNAME":"YOUR PASSWORD"@trailblazerdb-gztzi.mongodb.net/products'
 mongoose.connect(URI, { useNewUrlParser: true });
 let db = mongoose.connection;
 
