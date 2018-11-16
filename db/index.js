@@ -1,42 +1,76 @@
-const mongoose = require('mongoose');
-mongoose.Promise = global.Promise; // this code solves a deprication warning for Mongoose mPromise
-// mongoose.connect('mongodb://localhost/products', { useNewUrlParser: true });
-const URI = 'mongodb+srv://"YOUR USERNAME":"YOUR PASSWORD"@trailblazerdb-gztzi.mongodb.net/products'
-mongoose.connect(URI, { useNewUrlParser: true });
-let db = mongoose.connection;
+const { Pool, Client } = require('pg');
+const dotenv = require('dotenv');
+dotenv.config();
 
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  console.log('Mongo DB is running');
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL
 });
 
-let tentSchema = new mongoose.Schema({
-  _id: Number,
-  imageURL: String,
-  title: String,
-  ranking: Number,
-  reviews: Number,
-  price: Number,
-  sleepingCapacity: String,
-  packagedWeight: String,
-  numberOfDoors: Number,
-  bestUse: String,
-  productType: String,
+pool.on('connect', () => {
+  console.log(`connected to PSQL DB`);
 });
 
-let shirtSchema = new mongoose.Schema({
-  _id: Number,
-  imageURL: String,
-  title: String,
-  ranking: Number,
-  reviews: Number,
-  price: Number,
-  productType: String,
+const createTables = () => {
+  const queryText =
+    `CREATE TABLE IF NOT EXISTS
+    tents(
+      _id bigserial PRIMARY KEY,
+      imageURL varchar(140),
+      title varchar(60),
+      ranking real,
+      reviews smallint,
+      price smallint,
+      sleepingCapacity varchar(20),
+      packagedWeight varchar(10),
+      numberOfDoors smallint,
+      bestUse varchar(20),
+      productType varchar(10)
+    );
+
+    CREATE TABLE IF NOT EXISTS
+    shirts(
+      _id bigserial PRIMARY KEY,
+      imageURL varchar(140),
+      title varchar(60),
+      ranking real,
+      reviews smallint,
+      price smallint,
+      productType varchar(10)
+    )`;
+
+  pool.query(queryText)
+    .then((res) => {
+      console.log(res);
+      pool.end();
+    })
+    .catch((err) => {
+      console.log(err);
+      pool.end();
+    });
+}
+
+const dropTables = () => {
+  const queryText = `DROP TABLE IF EXISTS tents;
+                     DROP TABLE IF EXISTS shirts`;
+  pool.query(queryText)
+    .then((res) => {
+      console.log(res);
+      pool.end();
+    })
+    .catch((err) => {
+      console.log(err);
+      pool.end();
+    });
+}
+
+pool.on('remove', () => {
+  console.log('client removed');
+  process.exit(0);
 });
 
-let Shirt = mongoose.model('Shirt', shirtSchema);
-let Tent = mongoose.model('Tent', tentSchema);
+module.exports = {
+  createTables,
+  dropTables
+};
 
-module.exports.Tent = Tent;
-module.exports.Shirt = Shirt;
-module.exports.db = db;
+require('make-runnable');
