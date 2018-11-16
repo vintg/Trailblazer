@@ -1,18 +1,13 @@
 const fs = require('fs');
-const csvWriter = require('csv-write-stream');
+const csv = require('fast-csv');
 const faker = require('faker');
-
-const {Pool, Client} = require('pg');
 const path = require('path');
 
-const dotenv = require('dotenv');
-dotenv.config();
-
 const randTent =()=> {
-  let sleepNum = parseInt(Math.random()*10);
+  let sleepNum = parseInt(Math.random()*8+2);
   return {
     imageURL: faker.image.avatar(),
-    title: faker.company.bs(),
+    title: faker.commerce.productName(),
     ranking: (Math.random()*5).toFixed(2),
     reviews: parseInt(Math.random()*100),
     price: parseInt(Math.random()*400+100),
@@ -28,7 +23,7 @@ const randTent =()=> {
 const randShirt =()=> {
   return {
     imageURL: faker.image.avatar(),
-    title: faker.company.bs(),
+    title: faker.commerce.productName(),
     ranking: (Math.random()*5).toFixed(2),
     reviews: parseInt(Math.random()*100),
     price: parseInt(Math.random()*85+10),
@@ -36,51 +31,45 @@ const randShirt =()=> {
   };
 };
 
-//write to csv
-// const q = 10;
-// const start = 200000;
-const n= 1000000;// const max = 600000;
-// const inc = 100000;
+const createData = async(nM)=>{
+  console.log(`${nM}M Primary Records`);
+  console.time("create time");
 
-// for(let ep=0;ep<q;ep++){
-//   console.log('Epoch',ep);
-//  var benchmark = [];
+  //define file paths
+  const shirtPath = path.join(__dirname,`shirts.csv`);
+  const tentPath = path.join(__dirname,`tents.csv`);
 
-//  for(let n=start;n<=max;n+=inc){
-    // let hrstart = process.hrtime();
-console.time("create time");
-for(let nMillion=0;nMillion<5;nMillion++){
-    //console.time("write shirts");
-    //{flags:'a'}
-    var writer = csvWriter({sendHeaders:false});
-    writer.pipe(fs.createWriteStream(path.join(__dirname,`shirts${nMillion+1}.csv`), {}));
-    for (let i = 0; i< n; i++){
-      writer.write(randShirt());
-    }
-    writer.end();
-    //console.timeEnd("write shirts");
+  //create write streams
+  const option = (append)? {flags:'a'}:{};
 
-    //console.time("write tents");
-    var writer = csvWriter({sendHeaders:false});
-    writer.pipe(fs.createWriteStream(path.join(__dirname,`tents${nMillion+1}.csv`),
-      {}));
-    for (let j = 0; j< n; j++){
-      writer.write(randTent());
-    }
-    writer.end();
-    //console.timeEnd("write tents");
-}
-console.timeEnd("create time");
-     // let hrend = process.hrtime(hrstart);
-     // console.log(`Primary recs: ${n}, Execution time (hr): ${hrend[0]}s, Rate: ${parseInt(n/hrend[0])} rows/s`);
-//    benchmark.push([n, hrend[0], n/hrend[0]]);
- // }
+  const shirt_csv = csv.createWriteStream({headers:false, objectMode: true}),
+    shirtStream = fs.createWriteStream(shirtPath, option);
 
-  // fs.appendFile(path.join(__dirname,'benchmark.csv'),
-  //   benchmark.map(v => v.join(', ')).join('\n'),
-  //   err => {if(err) throw err});
-//}
+  const tent_csv = csv.createWriteStream({headers:false, objectMode: true}),
+    tentStream = fs.createWriteStream(tentPath, option);
 
+  shirtStream.on('finish', ()=> console.log('shirts complete'));
+  tentStream.on('finish', ()=> console.log('tents complete'));
 
-// CREATE INDEX tents_type_index ON tents (productType);
-// CREATE INDEX shirt_type_index ON shirts (productType);
+  shirt_csv.pipe(shirtStream);
+  tent_csv.pipe(tentStream);
+
+  //write data
+  for(let z=0;z<0.5*nM*Math.pow(10,6);z++){
+    shirt_csv.write(randShirt());
+    tent_csv.write(randTent());
+  }
+
+  //end streams
+  shirt_csv.end();
+  tent_csv.end();
+
+  console.timeEnd("create time");
+
+};
+
+// control *****************************************
+const nM = 2; // enter how many million primary recs to populate
+const append = true;
+createData(nM);
+

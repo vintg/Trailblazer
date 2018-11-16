@@ -12,22 +12,20 @@ const pool = new Pool({
 const shirtCols = 'imageURL, title, ranking, reviews, price, productType';
 const tentCols = 'imageURL, title, ranking, reviews, price, sleepingCapacity, packagedWeight, numberOfDoors, bestUse, productType';
 
-for(let z = 1; z< 6; z++){
-  let shirtpath = path.join(__dirname,`shirts${z}.csv`);
-  let tentpath = path.join(__dirname,`tents${z}.csv`);
+const shirtpath = path.join(__dirname,`shirts.csv`);
+const tentpath = path.join(__dirname,`tents.csv`);
 
-  pool.connect()
-      .then(client => executeQuery(client, shirtpath, 'shirts', shirtCols))
-      .catch(e=> console.log(e));
+pool.connect()
+    .then(client => executeQuery(client, shirtpath, 'shirts', shirtCols))
+    .catch(e=> console.log(e));
 
-  pool.connect()
-      .then( client => executeQuery(client, tentpath, 'tents', tentCols))
-      .catch(e=> console.log(e));
-}
+pool.connect()
+    .then( client => executeQuery(client, tentpath, 'tents', tentCols))
+    .catch(e=> console.log(e));
+
 pool.end();
 
 const executeQuery = (client, inputFile, targetTable, columns) => {
-  console.time("copy time");
   const execute = (target, callback) => {
     client.query(`Truncate ${target}`, (err) => {
       if (err) {
@@ -39,12 +37,15 @@ const executeQuery = (client, inputFile, targetTable, columns) => {
       }
     });
   };
-  execute(targetTable, (err) =>{
-    if (err) return console.log(`Error in Truncate Table: ${err}`)
-    let stream = client.query(copyFrom(`COPY ${targetTable} (${columns}) FROM STDIN CSV`));
-    let fileStream = fs.createReadStream(inputFile);
 
-    fileStream.on('error', (error) =>{
+  execute(targetTable, (err) =>{
+    if (err) return console.log(`Error in Truncate Table: ${err}`);
+
+    console.time("copy time");
+    let stream = client.query(copyFrom(`COPY ${targetTable} (${columns}) FROM STDIN CSV`));
+    let rs = fs.createReadStream(inputFile);
+
+    rs.on('error', (error) =>{
       console.log(`Error in creating read stream ${error}`);
     });
     stream.on('error', (error) => {
@@ -54,8 +55,12 @@ const executeQuery = (client, inputFile, targetTable, columns) => {
       console.log(`Completed loading data into ${targetTable}`);
       client.release();
     });
-    fileStream.pipe(stream);
+    rs.pipe(stream);
   });
+
   console.timeEnd("copy time");
+
 };
 
+// CREATE INDEX tents_type_index ON tents (productType);
+// CREATE INDEX shirt_type_index ON shirts (productType);
