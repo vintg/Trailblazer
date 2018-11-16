@@ -33,7 +33,6 @@ const randShirt =()=> {
 
 const createData = async(nM)=>{
   console.log(`${nM}M Primary Records`);
-//  console.time("create time");
 
   //define file paths
   const shirtPath = path.join(__dirname,`shirts.csv`);
@@ -63,14 +62,12 @@ const createData = async(nM)=>{
   //end streams
   shirt_csv.end();
   tent_csv.end();
-
-//  console.timeEnd("create time");
-
 };
 
-// control *****************************************
+// control *******************************************
 const nM = .5; // enter how many million primary recs to populate
 const append = true;
+//****************************************************
 
 let hrstart = process.hrtime();
 createData(nM)

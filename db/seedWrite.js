@@ -5,25 +5,25 @@ const fs = require('fs');
 const dotenv = require('dotenv');
 dotenv.config();
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL
-});
-
-const shirtCols = 'imageURL, title, ranking, reviews, price, productType';
-const tentCols = 'imageURL, title, ranking, reviews, price, sleepingCapacity, packagedWeight, numberOfDoors, bestUse, productType';
-
 // control *************************************
 // specify input file names
 const shirtpath = path.join(__dirname,`shirts.csv`);
 const tentpath = path.join(__dirname,`tents.csv`);
 // truncate = 1 to clear tables before inserting
 const truncate = 0;
+// column paths must match table schema!!
+const shirtCols = 'imageURL, title, ranking, reviews, price, productType';
+const tentCols = 'imageURL, title, ranking, reviews, price, sleepingCapacity, packagedWeight, numberOfDoors, bestUse, productType';
+//*********************************************
 
-let hrstart = process.hrtime();
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL
+});
 
 pool.connect()
-    .then( client => {
-      executeQuery(client, tentpath, 'tents', tentCols, truncate)
+  .then( client => {
+    let hrstart = process.hrtime();
+    executeQuery(client, tentpath, 'tents', tentCols, truncate)
       .then(()=> {
         pool.connect()
           .then(client =>{
@@ -32,24 +32,13 @@ pool.connect()
                 let hrend = process.hrtime(hrstart);
                 console.info('Copy time (hr): %ds %dms', hrend[0], hrend[1] / 1000000);
                 pool.end();
-              }).catch(e=> console.log(e))
+              })
+              .catch(e=> console.log(e))
           })
           .catch(e=> console.log(e));
       })
-    })
-    .catch(e=> console.log(e));
-
-// pool.connect()
-//     .then(client =>{
-//       executeQuery(client, shirtpath, 'shirts', shirtCols)
-//         .then(()=> {
-//           let hrend = process.hrtime(hrstart);
-//           console.info('Copy time (hr): %ds %dms', hrend[0], hrend[1] / 1000000);
-//         }).catch(e=> console.log(e))
-//     })
-//     .catch(e=> console.log(e));
-
-// pool.end();
+  })
+  .catch(e=> console.log(e));
 
 // CREATE INDEX tents_type_index ON tents (productType);
 // CREATE INDEX shirt_type_index ON shirts (productType);
@@ -73,7 +62,6 @@ const executeQuery = async(client, inputFile, targetTable, columns, truncate=0) 
 
   execute(targetTable, (err) =>{
     if (err) return console.log(`Error in Truncate Table: ${err}`);
-
     let stream = client.query(copyFrom(`COPY ${targetTable} (${columns}) FROM STDIN CSV`));
     let rs = fs.createReadStream(inputFile);
     rs.on('error', (error) =>{
