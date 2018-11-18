@@ -5,44 +5,6 @@ const fs = require('fs');
 const dotenv = require('dotenv');
 dotenv.config();
 
-// control *************************************
-// specify input file names
-const shirtpath = path.join(__dirname,`shirts.csv`);
-const tentpath = path.join(__dirname,`tents.csv`);
-// truncate = 1 to clear tables before inserting
-const truncate = 0;
-// column paths must match table schema!!
-const shirtCols = 'imageURL, title, ranking, reviews, price, productType';
-const tentCols = 'imageURL, title, ranking, reviews, price, sleepingCapacity, packagedWeight, numberOfDoors, bestUse, productType';
-//*********************************************
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL
-});
-
-pool.connect()
-  .then( client => {
-    let hrstart = process.hrtime();
-    executeQuery(client, tentpath, 'tents', tentCols, truncate)
-      .then(()=> {
-        pool.connect()
-          .then(client =>{
-            executeQuery(client, shirtpath, 'shirts', shirtCols, truncate)
-              .then(()=> {
-                let hrend = process.hrtime(hrstart);
-                console.info('Copy time (hr): %ds %dms', hrend[0], hrend[1] / 1000000);
-                pool.end();
-              })
-              .catch(e=> console.log(e))
-          })
-          .catch(e=> console.log(e));
-      })
-  })
-  .catch(e=> console.log(e));
-
-// CREATE INDEX tents_type_index ON tents (productType);
-// CREATE INDEX shirt_type_index ON shirts (productType);
-
 const executeQuery = async(client, inputFile, targetTable, columns, truncate=0) => {
   const execute = (target, callback, truncate) => {
     if(truncate===1){
@@ -81,3 +43,38 @@ const executeQuery = async(client, inputFile, targetTable, columns, truncate=0) 
   });
 
 };
+
+// control *************************************
+// specify input file names
+const shirtpath = path.join(__dirname,`shirts.csv`);
+const tentpath = path.join(__dirname,`tents.csv`);
+// truncate = 1 to clear tables before inserting, must be 0 for append
+const truncate = 1;
+// columns must match table schema!!
+const shirtCols = 'imageURL, title, ranking, reviews, price, productType';
+const tentCols = 'imageURL, title, ranking, reviews, price, sleepingCapacity, packagedWeight, numberOfDoors, bestUse, productType';
+//*********************************************
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL
+});
+
+pool.connect()
+  .then( client => {
+    let hrstart = process.hrtime();
+    executeQuery(client, tentpath, 'tents', tentCols, truncate)
+      .then(()=> {
+        pool.connect()
+          .then(client =>{
+            executeQuery(client, shirtpath, 'shirts', shirtCols, truncate)
+              .then(()=> {
+                let hrend = process.hrtime(hrstart);
+                console.info('Copy time (hr): %ds %dms', hrend[0], hrend[1] / 1000000);
+                pool.end();
+              })
+              .catch(e=> console.log(e))
+          })
+          .catch(e=> console.log(e));
+      })
+  })
+  .catch(e=> console.log(e));
