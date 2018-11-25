@@ -14,6 +14,7 @@
     "startmon": "nodemon --inspect server/index.js",
     "pg:init": "node db/index.js dropTables && node db/index.js createTables",
     "pg:write": "node --max-old-space-size=3072 db/seedWrite.js",
+    "pg:dc": "node --max-old-space-size=3072 db/directPipe.js",
     "pg:create": "node --max-old-space-size=3072 db/seedCreate.js",
     "ztest": "node --max-old-space-size=2048 db/testwrite.js",
     "lint:fix": "eslint --ext .jsx 'client' --fix",
@@ -35,6 +36,8 @@
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-star-ratings": "^2.3.0",
+    "readable-stream": "^3.0.6",
+    "through2": "^3.0.0",
     "unfetch": "^4.0.1"
   },
   "devDependencies": {
