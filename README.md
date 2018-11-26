@@ -18,6 +18,8 @@
 ## Usage
 
 > Some usage instructions
+- pg:init drops and creates db tables in postgres
+- pg:create writes random data to a file(s) for each table
 
 ## Requirements
 
