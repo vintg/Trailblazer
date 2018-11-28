@@ -11,6 +11,9 @@ if(cluster.isMaster) {
 const bodyParser = require("body-parser");
 const path = require("path");
 const fs = require('fs');
+const {Pool, Client} = require('pg');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const express = require("express");
 const app = express();
@@ -26,13 +29,11 @@ app.use((req, res, next) => {
   next();
 });
 
-const cassandra = require('cassandra-driver');
-const authProvider = new cassandra.auth.PlainTextAuthProvider('scylla', 'XOEDTTBPZGYAZIQD');
-
-const client = new cassandra.Client({
-  contactPoints: ['172.17.0.2'],
-  authProvider: authProvider,
-  keyspace: 'sdc'
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL
+});
+pool.on('connect', () => {
+  console.log(`\nconnected to PSQL DB\n`);
 });
 
 // Routes-Endpoints
@@ -46,8 +47,8 @@ app.get("/product/data/:id", (req, res) => {
   const product = id <= 5*Math.pow(10,6) ? 'tents' : 'shirts';
   if (product==='shirts') id = Math.max(1,id-5*Math.pow(10,6));
 
-  const queryText = `SELECT * FROM ${product} WHERE id = ${id}`;
-    client.execute(queryText)
+  const queryText = `SELECT * FROM ${product} WHERE _ID = ${id}`;
+    pool.query(queryText)
     .then(item => {
       let result = item.rows;
       let data = [];
@@ -55,7 +56,7 @@ app.get("/product/data/:id", (req, res) => {
         let r = result[i];
         if (product==='tents') {
           var re = {
-            "_id":r.id,
+            "_id":r._id,
             "imageURL":r.imageurl,
             "title":r.title,
             "ranking":r.ranking,
@@ -69,7 +70,7 @@ app.get("/product/data/:id", (req, res) => {
           };
         } else {
            var re = {
-            "_id":r.id,
+            "_id":r._id,
             "imageURL":r.imageurl,
             "title":r.title,
             "ranking":r.ranking,
@@ -88,16 +89,15 @@ app.get("/product/data/:id", (req, res) => {
 });
 
 app.get("/data/shirts", (req, res) => {
-  let st = Math.ceil(Math.random()*5*(Math.pow(10,6)-6));
-  const queryText = `SELECT * FROM shirts WHERE id IN (${st},${st+1},${st+2},${st+3})`;
-    client.execute(queryText)
+  const queryText = `SELECT * FROM shirts TABLESAMPLE SYSTEM(.001) LIMIT 4`;
+    pool.query(queryText)
     .then(item => {
       let result = item.rows;
       let data = [];
       for (let k in result){
         let r = result[k];
         let re = {
-          "_id":r.id,
+          "_id":r._id,
           "imageURL":r.imageurl,
           "title":r.title,
           "ranking":r.ranking,
@@ -115,16 +115,15 @@ app.get("/data/shirts", (req, res) => {
 });
 
 app.get("/data/tents", (req, res) => {
-  let st = Math.ceil(Math.random()*5*(Math.pow(10,6)-7));
-  const queryText = `SELECT * FROM tents WHERE id IN (${st},${st+1},${st+2},${st+3},${st+4})`;
-    client.execute(queryText)
+  const queryText = `SELECT * FROM tents TABLESAMPLE SYSTEM(.001) LIMIT 5`;
+    pool.query(queryText)
     .then(item => {
       let result = item.rows;
       let data = [];
       for (let k in result){
         let r = result[k];
         let re = {
-          "_id":r.id,
+          "_id":r._id,
           "imageURL":r.imageurl,
           "title":r.title,
           "ranking":r.ranking,
@@ -152,6 +151,9 @@ app.listen(port, () => {
 });
 
 cluster.on('exit', function (worker) {
+
+    // Replace the dead worker,
+    // we're not sentimental
     console.log('Worker %d died :(', worker.id);
     cluster.fork();
 
