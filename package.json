@@ -18,7 +18,6 @@
     "db:create": "node --max-old-space-size=3072 db/seedCreate.js",
     "cs:init": "node db2/scycreate.js",
     "cs:seed": "node db2/scyseed.js",
-    "ktest": "k6 run tests/k6test.js",
     "ztest": "node --max-old-space-size=2048 db/testwrite.js",
     "lint:fix": "eslint --ext .jsx 'client' --fix",
     "lint": "eslint --ext .jsx 'client'",
