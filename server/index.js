@@ -1,4 +1,13 @@
-const express = require("express");
+require('newrelic');
+var cluster = require('cluster');
+if(cluster.isMaster) {
+  const cpuCount = require('os').cpus().length;
+  for(let i=0;i<cpuCount;i++){
+    cluster.fork();
+  }
+
+} else {
+
 const bodyParser = require("body-parser");
 const path = require("path");
 const fs = require('fs');
@@ -6,6 +15,7 @@ const {Pool, Client} = require('pg');
 const dotenv = require('dotenv');
 dotenv.config();
 
+const express = require("express");
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -137,5 +147,16 @@ app.get("/data/tents", (req, res) => {
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-  console.log(`listening on port ${port}`);
+  console.log(`listening on worker ${cluster.worker.id} port ${port}`);
 });
+
+cluster.on('exit', function (worker) {
+
+    // Replace the dead worker,
+    // we're not sentimental
+    console.log('Worker %d died :(', worker.id);
+    cluster.fork();
+
+});
+
+}
