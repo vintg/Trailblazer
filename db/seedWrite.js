@@ -46,13 +46,13 @@ const executeQuery = async(client, inputFile, targetTable, columns, truncate=0) 
 
 // control *************************************
 // specify input file names
-const shirtpath = path.join(__dirname,`shirts.csv`);
-const tentpath = path.join(__dirname,`tents.csv`);
+const shirtpath = path.join(__dirname,`shirts5.csv`);
+const tentpath = path.join(__dirname,`tents5.csv`);
 // truncate = 1 to clear tables before inserting, must be 0 for append
-const truncate = 1;
+const truncate = 0;
 // columns must match table schema!!
-const shirtCols = 'imageURL, title, ranking, reviews, price, productType';
-const tentCols = 'imageURL, title, ranking, reviews, price, sleepingCapacity, packagedWeight, numberOfDoors, bestUse, productType';
+const shirtCols = '_id, imageURL, title, ranking, reviews, price, productType';
+const tentCols = '_id, imageURL, title, ranking, reviews, price, sleepingCapacity, packagedWeight, numberOfDoors, bestUse, productType';
 //*********************************************
 
 const pool = new Pool({

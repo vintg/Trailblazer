@@ -13,10 +13,10 @@ client.connect()
       `CREATE KEYSPACE IF NOT EXISTS sdc
        WITH replication = {'class': 'SimpleStrategy', 'replication_factor': '1' }`,
       'USE sdc',
-      `CREATE TABLE IF NOT EXISTS tents (id int, imageurl varchar, title varchar, ranking float, reviews smallint, price smallint, sleepingCapacity varchar,  packagedWeight varchar, numberOfDoors smallint, bestUse varchar, productType varchar,
+      `CREATE TABLE IF NOT EXISTS tents (id int, imageurl text, title text, ranking float, reviews smallint, price smallint, sleepingCapacity text,  packagedWeight text, numberOfDoors smallint, bestUse text, productType text,
         PRIMARY KEY (id, reviews, ranking))
         WITH CLUSTERING ORDER BY (reviews DESC, ranking DESC)`,
-      `CREATE TABLE IF NOT EXISTS shirts (id int, imageurl varchar, title varchar, ranking float, reviews smallint, price smallint, productType varchar,
+      `CREATE TABLE IF NOT EXISTS shirts (id int, imageurl text, title text, ranking float, reviews smallint, price smallint, productType text,
         PRIMARY KEY (id, reviews, ranking))
         WITH CLUSTERING ORDER BY (reviews DESC, ranking DESC)`,
     ];
