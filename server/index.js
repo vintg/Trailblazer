@@ -34,7 +34,6 @@ const client = new cassandra.Client({
   authProvider: authProvider,
   keyspace: 'sdc'
 });
-client.connect();
 
 // Routes-Endpoints
 app.get("/product/:id", (req, res) => {
