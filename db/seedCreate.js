@@ -32,11 +32,11 @@ const randShirt =()=> {
   };
 };
 
-const createData = async()=>{
+const createData = async(num)=>{
   console.log(`${nM}M Primary Records`);
 
-  let shirtPath = path.join(__dirname,`shirts5.csv`);
-  let tentPath = path.join(__dirname,`tents5.csv`);
+  let shirtPath = path.join(__dirname,`/data/ashirts${num}.csv`);
+  let tentPath = path.join(__dirname,`/data/atents${num}.csv`);
 
   const option = (append)? {flags:'a'}:{};
   let shirt_csv = csv.createWriteStream({headers:false, objectMode: true}),
@@ -70,19 +70,21 @@ let idz = 1;
 };
 
 // control *******************************************
-const nM = 2; // enter how many million primary recs to populate
+const nM = 2; // enter how many million primary recs to populate at a time
 const tableCt = 2;
 const append = false;
 const totalSize = nM/tableCt*Math.pow(10,6);
 const batchSize = 100000;
 //****************************************************
 
-let hrstart = process.hrtime();
-createData()
-  .then(()=> {
-    let hrend = process.hrtime(hrstart);
-    console.info('Create time (hr): %ds %dms', hrend[0], hrend[1] / 1000000);
-  })
-  .catch(e=>console.log(e));
+for (let i =1;i<=5;i++){
+  let hrstart = process.hrtime();
+  createData(i)
+    .then(()=> {
+      let hrend = process.hrtime(hrstart);
+      console.info('Create time (hr): %ds %dms', hrend[0], hrend[1] / 1000000);
+    })
+    .catch(e=>console.log(e));
+}
 
 module.exports = {randShirt:randShirt, randTent:randTent};
