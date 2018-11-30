@@ -33,7 +33,7 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL
 });
 pool.on('connect', () => {
-  console.log(`\nconnected to PSQL DB\n`);
+  console.log(`\nconnected to PSQL DB on ${process.env.DATABASE_URL}\n`);
 });
 
 // Routes-Endpoints
@@ -92,6 +92,7 @@ app.get("/data/shirts", (req, res) => {
   const queryText = `SELECT * FROM shirts TABLESAMPLE SYSTEM(.001) LIMIT 4`;
     pool.query(queryText)
     .then(item => {
+      console.log('SHIRTS', item.rows);
       let result = item.rows;
       let data = [];
       for (let k in result){
@@ -118,6 +119,7 @@ app.get("/data/tents", (req, res) => {
   const queryText = `SELECT * FROM tents TABLESAMPLE SYSTEM(.001) LIMIT 5`;
     pool.query(queryText)
     .then(item => {
+      console.log('TENTS', item.rows);
       let result = item.rows;
       let data = [];
       for (let k in result){
