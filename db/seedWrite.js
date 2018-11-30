@@ -45,36 +45,27 @@ const executeQuery = async(client, inputFile, targetTable, columns, truncate=0) 
 };
 
 // control *************************************
-// specify input file names
-const shirtpath = path.join(__dirname,`shirts5.csv`);
-const tentpath = path.join(__dirname,`tents5.csv`);
 // truncate = 1 to clear tables before inserting, must be 0 for append
 const truncate = 0;
 // columns must match table schema!!
 const shirtCols = '_id, imageURL, title, ranking, reviews, price, productType';
 const tentCols = '_id, imageURL, title, ranking, reviews, price, sleepingCapacity, packagedWeight, numberOfDoors, bestUse, productType';
-//*********************************************
 
+//main init
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL
 });
 
-pool.connect()
-  .then( client => {
-    let hrstart = process.hrtime();
-    executeQuery(client, tentpath, 'tents', tentCols, truncate)
-      .then(()=> {
-        pool.connect()
-          .then(client =>{
-            executeQuery(client, shirtpath, 'shirts', shirtCols, truncate)
-              .then(()=> {
-                let hrend = process.hrtime(hrstart);
-                console.info('Copy time (hr): %ds %dms', hrend[0], hrend[1] / 1000000);
-                pool.end();
-              })
-              .catch(e=> console.log(e))
-          })
-          .catch(e=> console.log(e));
-      })
-  })
-  .catch(e=> console.log(e));
+for (let i=1;i<=5;i++){
+  // specify input file names
+  let shirtpath = path.join(__dirname,`/data/shirts${i}.csv`);
+  let tentpath = path.join(__dirname,`/data/tents${i}.csv`);
+
+  pool.connect()
+    .then(client => executeQuery(client, tentpath, 'tents', tentCols, truncate)
+    .then(()=> { pool.connect()
+      .then(client=>executeQuery(client, shirtpath, 'shirts', shirtCols, truncate))
+      .catch(e=> console.log(e))
+    })
+    .catch(e=>console.log(e)));
+}

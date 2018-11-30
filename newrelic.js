@@ -2,6 +2,8 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 'use strict'
+const dotenv = require('dotenv');
+dotenv.config();
 /**
  * New Relic agent configuration.
  *

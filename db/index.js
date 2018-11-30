@@ -7,7 +7,7 @@ const pool = new Pool({
 });
 
 pool.on('connect', () => {
-  console.log(`connected to PSQL DB`);
+  console.log(`connected to PSQL DB on ${process.env.DATABASE_URL}`);
 });
 
 const createTables = () => {
