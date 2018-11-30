@@ -49,7 +49,7 @@ pool.connect()
         cb(null, Object.values(data) + '\n');
       });
       let db = client.query(copyFrom('COPY shirts (imageURL, title, ranking, reviews, price, productType) FROM STDIN CSV'));
-      for (let i =0;i<1*Math.pow(10,6);i++){
+      for (let i =0;i<.1*Math.pow(10,6);i++){
         shirtstream.push(randShirt());
       }
       shirtstream.push(null); // No more data
