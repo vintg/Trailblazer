@@ -35,8 +35,8 @@ const randShirt =()=> {
 const createData = async(num)=>{
   console.log(`${nM}M Primary Records`);
 
-  let shirtPath = path.join(__dirname,`/data/ashirts${num}.csv`);
-  let tentPath = path.join(__dirname,`/data/atents${num}.csv`);
+  let shirtPath = path.join(__dirname,`/data/shirts${num}.csv`);
+  let tentPath = path.join(__dirname,`/data/tents${num}.csv`);
 
   const option = (append)? {flags:'a'}:{};
   let shirt_csv = csv.createWriteStream({headers:false, objectMode: true}),
