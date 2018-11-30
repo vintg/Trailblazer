@@ -1,6 +1,4 @@
 import React from "react";
-// import PeopleAlsoViewed from './peopleAlsoViewed.jsx';
-// import CompareAtGlance from './compareAtGlance.jsx';
 import Tents from "./Tents";
 import Shirts from "./Shirts";
 import "unfetch/polyfill"; // This is required for jest tests. Node does not understand the fetch method until you download npm unfetch.

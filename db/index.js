@@ -1,13 +1,12 @@
 const { Pool, Client } = require('pg');
-const dotenv = require('dotenv');
-dotenv.config();
+const config = require('../config');
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL
+  connectionString: config.DATABASE_URI
 });
 
 pool.on('connect', () => {
-  console.log(`connected to PSQL DB on ${process.env.DATABASE_URL}`);
+  console.log(`connected to PSQL DB on ${config.DATABASE_URI}`);
 });
 
 const createTables = () => {

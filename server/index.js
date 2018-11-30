@@ -12,9 +12,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const fs = require('fs');
 const {Pool, Client} = require('pg');
-const dotenv = require('dotenv');
-dotenv.config();
-
+const config = require('../config');
 const express = require("express");
 const app = express();
 app.use(bodyParser.json());
@@ -30,10 +28,10 @@ app.use((req, res, next) => {
 });
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL
+  connectionString: config.DATABASE_URI
 });
 pool.on('connect', () => {
-  console.log(`\nconnected to PSQL DB on ${process.env.DATABASE_URL}\n`);
+  console.log(`\nconnected to PSQL DB on ${config.DATABASE_URI}\n`);
 });
 
 // Routes-Endpoints
@@ -146,7 +144,7 @@ app.get("/data/tents", (req, res) => {
     });
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 1337;
 
 app.listen(port, () => {
   console.log(`listening on worker ${cluster.worker.id} port ${port}`);
