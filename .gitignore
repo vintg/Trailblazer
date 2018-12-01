@@ -3,3 +3,4 @@ package-lock.json
 .env
 db/data
 postgres-aws.pem
+newrelic_agent.log
