@@ -3,3 +3,4 @@ node_modules
 npm-debug
 db/data
 postgres-aws.pem
+newrelic_agent.log

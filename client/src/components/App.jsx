@@ -11,17 +11,15 @@ export default class App extends React.Component {
       tents: false,
       shirts: false
     };
-
     this.updateState = this.updateState.bind(this);
   }
 
   componentDidMount() {
     const url = window.location.href.split("/");
     const id = +url[url.length - 1];
-    if (!isNaN(id) && id !== 0 && id < Math.pow(10,7)) {
+    if (!isNaN(id) && id > 0 && id < Math.pow(10,7)) {
       this.getCurrentItem(this.updateState, id);
     }
-
     this.getTentData(this.updateState);
     this.getShirtData(this.updateState);
   }
