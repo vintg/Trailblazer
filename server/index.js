@@ -79,6 +79,7 @@ app.get("/product/data/:id", (req, res) => {
         }
       data.push(re);
     }
+    console.log('GENERAL', data);
       res.status(200).send(data);
     })
     .catch(err => {
@@ -90,7 +91,6 @@ app.get("/data/shirts", (req, res) => {
   const queryText = `SELECT * FROM shirts TABLESAMPLE SYSTEM(.001) LIMIT 4`;
     pool.query(queryText)
     .then(item => {
-      console.log('SHIRTS', item.rows);
       let result = item.rows;
       let data = [];
       for (let k in result){
@@ -106,6 +106,7 @@ app.get("/data/shirts", (req, res) => {
         };
         data.push(re);
       }
+      console.log('SHIRTS', data);
       res.status(200).send(data);
     })
     .catch(err => {
@@ -117,7 +118,6 @@ app.get("/data/tents", (req, res) => {
   const queryText = `SELECT * FROM tents TABLESAMPLE SYSTEM(.001) LIMIT 5`;
     pool.query(queryText)
     .then(item => {
-      console.log('TENTS', item.rows);
       let result = item.rows;
       let data = [];
       for (let k in result){
@@ -137,6 +137,7 @@ app.get("/data/tents", (req, res) => {
         };
         data.push(re);
       }
+      console.log('TENTS', data);
       res.status(200).send(data);
     })
     .catch(err => {
