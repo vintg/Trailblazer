@@ -1,13 +1,6 @@
 # Project Name
 
-> Project description
-
-## Related Projects
-
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
+> product comparisons component for trailblazers x gng
 
 ## Table of Contents
 
@@ -19,7 +12,9 @@
 
 > Some usage instructions
 - pg:init drops and creates db tables in postgres
-- pg:create writes random data to a file(s) for each table
+- db:create writes random seed data to file(s) for each table up to 10M primary records
+- pg:write writes the seed data files to db
+- uri and keys in config file
 
 ## Requirements
 
