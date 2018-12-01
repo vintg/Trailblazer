@@ -27,23 +27,21 @@ export default class App extends React.Component {
   }
 
   getCurrentItem(cb, id) {
-    fetch(
-      `${window.location.origin}/product/data/${id}` //http://trailblazer-pc.us-east-2.elasticbeanstalk.com
-    )
+    fetch(`${window.location.origin}/product/data/${id}`)
       .then(res => res.json())
       .then(data => cb("currentItem", data))
       .catch(error => console.error(error));
   }
 
   getTentData(cb) {
-    fetch(`${window.location.origin}/data/tents`) //http://trailblazer-pc.us-east-2.elasticbeanstalk.com
+    fetch(`${window.location.origin}/data/tents`)
       .then(res => res.json())
       .then(data => cb("tents", data))
       .catch(error => console.error(error));
   }
 
   getShirtData(cb) {
-    fetch(`${window.location.origin}/data/shirts`) //http://trailblazer-pc.us-east-2.elasticbeanstalk.com
+    fetch(`${window.location.origin}/data/shirts`)
       .then(res => res.json())
       .then(data => cb("shirts", data))
       .catch(error => console.error(error));
