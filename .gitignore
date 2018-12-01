@@ -2,5 +2,5 @@ node_modules
 package-lock.json
 .env
 db/data
-postgres-aws.pem
+*.pem
 newrelic_agent.log
