@@ -5,13 +5,11 @@ const copyFrom = require('pg-copy-streams').from;
 const fs = require('fs');
 const csv = require('fast-csv');
 const faker = require('faker');
-const dotenv = require('dotenv');
-dotenv.config();
-
+const config = require('../config');
 const Readable = require ('readable-stream').Readable;
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL
+  connectionString: config.DATABASE_URI
 });
 
 const randTent =()=> {

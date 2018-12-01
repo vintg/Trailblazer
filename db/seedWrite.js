@@ -2,8 +2,7 @@ const {Pool, Client} = require('pg');
 const path = require('path');
 const copyFrom = require('pg-copy-streams').from;
 const fs = require('fs');
-const dotenv = require('dotenv');
-dotenv.config();
+const config = require('../config');
 
 const executeQuery = async(client, inputFile, targetTable, columns, truncate=0) => {
   const execute = (target, callback, truncate) => {
@@ -53,7 +52,7 @@ const tentCols = '_id, imageURL, title, ranking, reviews, price, sleepingCapacit
 
 //main init
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL
+  connectionString: config.DATABASE_URI
 });
 
 for (let i=1;i<=5;i++){

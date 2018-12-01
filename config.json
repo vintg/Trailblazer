@@ -1,0 +1,4 @@
+{
+  "DATABASE_URI" : "postgres://power_user:powerstone@ec2-34-220-1-37.us-west-2.compute.amazonaws.com:5432/sdc",
+  "NEW_RELIC" : "847b37b12af689b8fd70b10a58ba5f9cedfbbd1b"
+}
