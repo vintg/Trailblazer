@@ -18,7 +18,8 @@ export default class App extends React.Component {
   componentDidMount() {
     const url = window.location.href.split("/");
     const id = +url[url.length - 1];
-    if (!isNaN(id) && id !== 0 && id < Math.pow(10,7)) {
+    if (!isNaN(id) && id > 0 && id < Math.pow(10,7)) {
+      console.log(url, id);
       this.getCurrentItem(this.updateState, id);
     }
 
@@ -27,6 +28,7 @@ export default class App extends React.Component {
   }
 
   getCurrentItem(cb, id) {
+    console.log('current item', window.location.origin);
     fetch(`${window.location.origin}/product/data/${id}`)
       .then(res => res.json())
       .then(data => cb("currentItem", data))
@@ -34,6 +36,7 @@ export default class App extends React.Component {
   }
 
   getTentData(cb) {
+    console.log('tent item', window.location.origin);
     fetch(`${window.location.origin}/data/tents`)
       .then(res => res.json())
       .then(data => cb("tents", data))
@@ -41,6 +44,7 @@ export default class App extends React.Component {
   }
 
   getShirtData(cb) {
+    console.log('shirt item', window.location.origin);
     fetch(`${window.location.origin}/data/shirts`)
       .then(res => res.json())
       .then(data => cb("shirts", data))
