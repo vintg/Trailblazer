@@ -1,7 +1,9 @@
 # Trailblazer
 
-> product comparisons component for trailblazers x gng (seed data has faces because faker twitter avatar urls were most convenient for >10^7 records)
+> product comparisons component for trailblazers x gng 
+*randomized seed data has faces because faker twitter avatar urls were most convenient for >10^7 records
 ![prodComp](https://github.com/vintg/Trailblazer/blob/master/sdcPreview.png)
+![K6 benchmarking](https://github.com/vintg/Trailblazer/blob/master/k6.png)
 
 ## Table of Contents
 
