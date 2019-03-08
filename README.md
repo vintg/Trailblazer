@@ -1,6 +1,7 @@
-# Project Name
+# Trailblazer
 
-> product comparisons component for trailblazers x gng
+> product comparisons component for trailblazers x gng (seed data has faces because faker twitter avatar urls were most convenient for >10^7 records)
+![prodComp](https://github.com/vintg/Trailblazer/blob/master/sdcPreview.png)
 
 ## Table of Contents
 
